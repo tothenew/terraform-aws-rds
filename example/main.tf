@@ -1,6 +1,5 @@
 module "create_database" {
-  source = "../"
-  #source              = "git::https://github.com/tothenew/terraform-aws-rds.git"
+  source              = "git::https://github.com/tothenew/terraform-aws-rds.git"
   create_rds     = false
   create_aurora = true
 
