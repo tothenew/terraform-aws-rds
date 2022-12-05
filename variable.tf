@@ -64,11 +64,6 @@ variable "apply_immediately" {
   description = "Apply changes immediately or wait for the maintainance window"
 }
 
-variable "security_groups" {
-  description = "A string value for Security Group ID"
-  type        = list(string)
-}
-
 variable "subnet_ids" {
   description = "The VPC Subnet IDs to launch in"
   type        = list(string)
@@ -206,4 +201,20 @@ variable environment {
 variable "common_tags" {
   type        = map(string)
   description = "A map to add common tags to all the resources"
+}
+
+variable "port" {
+  type = number
+  default = 3306
+  description = "Port number for this DB (usually 3306 for MySQL and 5432 for Postgres)"
+}
+
+variable "vpc_cidr" {
+  type = string
+  default = "127.0.0.1"
+}
+
+variable "vpc_id" {
+  type = string
+  default = "vpc-999999999999"
 }

@@ -28,7 +28,7 @@ resource "aws_db_instance" "rds_db" {
   username                        = var.username
   password                        = random_string.rds_db_password.result
   db_subnet_group_name            = aws_db_subnet_group.rds_subnet_group.name
-  vpc_security_group_ids          = var.security_groups
+  vpc_security_group_ids          = [aws_security_group.rds_db.id]
   apply_immediately               = var.apply_immediately
   kms_key_id                      = var.kms_key_arn
   multi_az                        = var.multi_az
@@ -56,7 +56,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
   iam_database_authentication_enabled = var.iam_database_authentication_enabled
   final_snapshot_identifier       = var.final_snapshot_identifier == "" ? "${var.project_name_prefix}-final-snapshot" : var.final_snapshot_identifier
   skip_final_snapshot             = var.skip_final_snapshot
-  vpc_security_group_ids              = var.security_groups
+  vpc_security_group_ids              = [aws_security_group.rds_db.id]
   apply_immediately                   = var.apply_immediately
   serverlessv2_scaling_configuration {
     max_capacity = var.serverlessv2_scaling_configuration_max
