@@ -3,9 +3,9 @@ module "create_database" {
   create_rds     = false
   create_aurora = true
 
-  subnet_ids       = ["subnet-99999999999999999","subnet-66666666666666666"]
-  vpc_id           = "vpc-999999999999"
-  vpc_cidr         = "10.0.0.0/16"
+  subnet_ids       = ["subnet-99999999999999","subnet-99999999999999"]
+  vpc_id           = "vpc-99999999999999"
+  vpc_cidr         = ["172.31.0.0/16"]
 
   publicly_accessible = true
   allocated_storage = 10

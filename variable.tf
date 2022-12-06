@@ -210,11 +210,9 @@ variable "port" {
 }
 
 variable "vpc_cidr" {
-  type = string
-  default = "127.0.0.1"
+  type = list(string)
 }
 
 variable "vpc_id" {
   type = string
-  default = "vpc-999999999999"
 }
