@@ -90,7 +90,6 @@ module "create_database" {
 |----------------------------------------|------------------------------------------------------------------------------------------------------------------------|----------------|---------|:--------:|
 | create_rds                             | If you want to create the AWS RDS (MySQL, PostgreSQL) enable this check                                                | `bool`         | `false` |   yes    |
 | create_aurora                          | If you want to create the AWS Aurora (MySQL, PostgreSQL) enable this check                                             | `bool`         | `true`  |   yes    |
-| security_groups                        | A string value for Security Group ID                                                                                   | `list(string)` | `n/a`   |   yes    |
 | subnet_id                              | The VPC Subnet IDs to launch in                                                                                        | `string`       | `n/a`   |   yes    |
 | vpc_id                                 | VPC ID                                                                                                                 | `string`       | `n/a`   |   yes    |
 | vpc_cidr                               | VPC cidr for allowing rule in SG                                                                                       | `string`       | `n/a`   |   yes    |

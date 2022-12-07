@@ -13,7 +13,7 @@ resource "aws_ssm_parameter" "rds_db_password" {
 
 resource "aws_ssm_parameter" "rds_db_user" {
   count       = var.secret_method == "ssm" ? 1 : 0
-  name        = "/${var.environment}RDS/USER"
+  name        = "/${var.environment}/RDS/USER"
   description = "RDS User"
   type        = "SecureString"
   key_id      = var.ssm_kms_key_id
