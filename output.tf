@@ -7,11 +7,11 @@ output "identifier" {
 }
 
 output "username" {
-  value = aws_db_instance.rds_db[0].username
+  value = var.create_rds == true ? aws_db_instance.rds_db[0].username : aws_rds_cluster.aurora_cluster[0].master_username
 }
 
 output "password" {
-  value = aws_db_instance.rds_db[0].password
+  value = var.create_rds == true ? aws_db_instance.rds_db[0].password : aws_rds_cluster.aurora_cluster[0].master_password
   sensitive = true
 }
 
