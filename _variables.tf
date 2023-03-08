@@ -202,6 +202,7 @@ variable environment {
 variable "common_tags" {
   type        = map(string)
   description = "A map to add common tags to all the resources"
+  default = {}
 }
 
 variable "port" {
@@ -216,4 +217,14 @@ variable "vpc_cidr" {
 
 variable "vpc_id" {
   type = string
+}
+
+variable "mysql_users" {
+  type = list(string)
+}
+
+variable "create_mysql_user" {
+  type        = bool
+  description = "If you want to create rds MySQL or PostgreSQL enable this check"
+  default     = false
 }

@@ -1,10 +1,10 @@
 module "create_database" {
-  source              = "../"
+  source              = "git::https://github.com/tothenew/terraform-aws-rds.git"
   create_rds     = true
   create_aurora = false
 
-  subnet_ids       = ["subnet-9999999999","subnet-9999999999"]
-  vpc_id           = "vpc-9999999999999"
+  subnet_ids       = ["subnet-999999","subnet-999999"]
+  vpc_id           = "vpc-999999"
   vpc_cidr         = ["172.31.0.0/16"]
 
   publicly_accessible = true
@@ -15,7 +15,7 @@ module "create_database" {
   instance_class = "db.t2.micro"
   database_name = "mydb"
   username   = "root"
-  identifier = "rds-database"
+  identifier = "my-first-db"
   apply_immediately = false
   storage_encrypted = false
   multi_az = false
@@ -26,10 +26,14 @@ module "create_database" {
   serverlessv2_scaling_configuration_max = 1.0
   serverlessv2_scaling_configuration_min = 0.5
 
+  
+  create_mysql_user = false
+  mysql_users = ["user1","user2"]
+
   common_tags = {
-    "Project"     = "rds-module",
-    "Environment" = "testing"
+    "Project"     = "internal",
+    "Environment" = "dev"
   }
-  environment = "testing"
+  environment = "dev"
   project_name_prefix = "rds-module"
 }
