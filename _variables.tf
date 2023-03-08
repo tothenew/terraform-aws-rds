@@ -221,6 +221,7 @@ variable "vpc_id" {
 
 variable "mysql_users" {
   type = list(string)
+  default = [""]
 }
 
 variable "create_mysql_user" {
