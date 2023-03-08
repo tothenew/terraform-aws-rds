@@ -42,6 +42,8 @@ No modules.
 | [aws_rds_cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster) | resource |
 | [aws_rds_cluster_instance](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster_instance) | resource |
 | [aws_ssm_parameter](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
+| [mysql_user](https://registry.terraform.io/providers/petoju/mysql/latest/docs/resources/user) | resource |
+| [mysql_grant](https://registry.terraform.io/providers/winebarrel/mysql/latest/docs/resources/grant) | resource |
 
 ## Usage
 ```
@@ -111,8 +113,10 @@ module "create_database" {
 | count_aurora_instances                 | Number of Aurora Instances                                                                                             | `number`       | `1`     |    no    |
 | serverlessv2_scaling_configuration_max | The maximum number of Aurora capacity units (ACUs) for a DB instance in an Aurora Serverless v2 cluster.               | `number`       | `1.0`   |    no    |
 | serverlessv2_scaling_configuration_min | The minimum number of Aurora capacity units (ACUs) for a DB instance in an Aurora Serverless v2 cluster.               | `number`       | `0.5`   |    no    |
+| create_mysql_user                            | Set create_mysql_user to true, for creating mysql users                                                                          | `bool`  | `false`   |    no    |
+| mysql_users                            | list of mysql users                                                                          | `list(string)`  | `n/a`   |    no    |
 | common_tags                            | A map to add common tags to all the resources                                                                          | `map(string)`  | `n/a`   |    no    |
-| environment                            | Environment                                                                                                            | `string`       | `dev`   |   no    |
+| environment                            | Environment                                                                                                            | `string`       | `dev`   |   yes    |
 | project_name_prefix                    | A string value to describe prefix of all the resources                                                                 | `string`       | `n/a`   |   no    |
 
 
