@@ -64,12 +64,12 @@ module "create_database" {
   instance_class = "db.serverless"
   database_name = "mydb"
   username   = "root"
-  identifier = "dev-tothenew-database"
+  identifier = "my-first-db"
   apply_immediately = false
   storage_encrypted = false
-  kms_key_arn = "tothenew"
+  kms_key_arn = "aws/key"
   multi_az = false
-  db_subnet_group_id = "tothenew-subnet-group"
+  db_subnet_group_id = "subnet-group"
   deletion_protection = false
   auto_minor_version_upgrade = false
   count_aurora_instances = 1
@@ -80,11 +80,11 @@ module "create_database" {
   mysql_users = ["user1","user2"]
 
   common_tags = {
-    "Project"     = "ToTheNew",
+    "Project"     = "internal",
     "Environment" = "dev"
   }
   environment = "dev"
-  project_name_prefix = "dev-tothenew"
+  project_name_prefix = "dev-project"
 }
 ```
 
