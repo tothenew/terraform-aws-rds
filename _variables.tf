@@ -7,13 +7,13 @@ variable "publicly_accessible" {
 variable "allocated_storage" {
   type        = number
   description = "Storage size in GB"
-  default     = null
+  default     = 10
 }
 
 variable "max_allocated_storage" {
   type        = number
   description = "Argument higher than the allocated_storage to enable Storage Autoscaling, size in GB. 0 to disable Storage Autoscaling"
-  default     = 0
+  default     = 20
 }
 
 variable "storage_type" {
@@ -44,7 +44,7 @@ variable "instance_class" {
 variable "database_name" {
   description = "Database Name"
   type        = string
-  default     = ""
+  default     = "mydb"
 }
 
 variable "retention" {
@@ -96,7 +96,7 @@ variable "deletion_protection" {
 variable "auto_minor_version_upgrade" {
   type        = bool
   description = "Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window"
-  default     = true
+  default     = false
 }
 
 variable "maintenance_window" {
@@ -173,6 +173,7 @@ variable "serverlessv2_scaling_configuration_min" {
 variable "db_subnet_group_id" {
   description = "RDS Subnet Group Name"
   type        = string
+  default = ""
 }
 
 variable "skip_final_snapshot" {

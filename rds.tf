@@ -4,10 +4,10 @@ resource "random_string" "rds_db_password" {
 }
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
-  name       = var.db_subnet_group_id
+  name       = var.db_subnet_group_id == "" ? "${var.environment}-${var.identifier}-subnet-group" : var.db_subnet_group_id
   subnet_ids = var.subnet_ids
   tags = {
-    Name = var.db_subnet_group_id
+    Name = var.db_subnet_group_id == "" ? "${var.environment}-${var.identifier}-subnet-group" : var.db_subnet_group_id
   }
 }
 
@@ -30,7 +30,6 @@ resource "aws_db_instance" "rds_db" {
   db_subnet_group_name            = aws_db_subnet_group.rds_subnet_group.name
   vpc_security_group_ids          = [aws_security_group.rds_db.id]
   apply_immediately               = var.apply_immediately
-  kms_key_id                      = var.kms_key_arn
   multi_az                        = var.multi_az
   storage_encrypted               = var.storage_encrypted
   deletion_protection             = var.deletion_protection
