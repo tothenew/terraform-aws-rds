@@ -75,6 +75,9 @@ module "create_database" {
   count_aurora_instances = 1
   serverlessv2_scaling_configuration_max = 1.0
   serverlessv2_scaling_configuration_min = 0.5
+  
+  create_mysql_user = false
+  mysql_users = ["user1","user2"]
 
   common_tags = {
     "Project"     = "ToTheNew",
