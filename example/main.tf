@@ -3,8 +3,8 @@ module "create_database" {
   create_rds     = true
   create_aurora = false
 
-  subnet_ids       = ["subnet-999999","subnet-999999"]
-  vpc_id           = "vpc-999999"
+  subnet_ids       = ["subnet-9999999","subnet-99999999"]
+  vpc_id           = "vpc-9999999999"
   vpc_cidr         = ["172.31.0.0/16"]
 
   publicly_accessible = true
@@ -15,7 +15,7 @@ module "create_database" {
   instance_class = "db.t2.micro"
   database_name = "mydb"
   username   = "root"
-  identifier = "my-first-db"
+  identifier = "final-test"
   apply_immediately = false
   storage_encrypted = false
   multi_az = false
@@ -26,14 +26,9 @@ module "create_database" {
   serverlessv2_scaling_configuration_max = 1.0
   serverlessv2_scaling_configuration_min = 0.5
 
+  environment = "dev"
+  project = "project-1"
   
   create_mysql_user = false
   mysql_users = ["user1","user2"]
-
-  common_tags = {
-    "Project"     = "internal",
-    "Environment" = "dev"
-  }
-  environment = "dev"
-  project_name_prefix = "rds-module"
 }

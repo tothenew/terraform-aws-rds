@@ -128,15 +128,15 @@ variable "create_rds" {
   default     = true
 }
 
-variable "project_name_prefix" {
+variable "project" {
   description = "A string value to describe prefix of all the resources"
   type        = string
-  default = "dev-tothenew"
+  default = ""
 }
 
 variable "identifier" {
   type        = string
-  default     = ""
+  default     = "database"
   description = "Optional identifier for DB. If not passed, {environment}-{name} will be used"
 }
 

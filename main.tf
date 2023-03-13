@@ -1,13 +1,19 @@
+resource "random_string" "unique_string" {
+  length  = 6
+  special = false
+  upper   = false
+}
+
 resource "random_string" "rds_db_password" {
   length  = 34
   special = false
 }
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
-  name       = var.db_subnet_group_id == "" ? "${var.environment}-${var.identifier}-subnet-group" : var.db_subnet_group_id
+  name       = "${var.environment}-${local.identifier}-subnet_group"
   subnet_ids = var.subnet_ids
   tags = {
-    Name = var.db_subnet_group_id == "" ? "${var.environment}-${var.identifier}-subnet-group" : var.db_subnet_group_id
+    Name = "${var.environment}-${local.identifier}-subnet_group"
   }
 }
 
@@ -21,7 +27,7 @@ resource "aws_db_instance" "rds_db" {
   engine                          = var.engine
   engine_version                  = var.engine_version
   snapshot_identifier             = var.snapshot_identifier != "" ? var.snapshot_identifier : null
-  identifier                      = var.identifier == "" ? "${var.project_name_prefix}" : var.identifier
+  identifier                      = "${var.environment}-${local.identifier}"
   instance_class                  = var.instance_class
   db_name                         = var.database_name
   backup_retention_period         = var.retention
@@ -36,14 +42,14 @@ resource "aws_db_instance" "rds_db" {
   maintenance_window              = var.maintenance_window
   backup_window                   = var.backup_window
   skip_final_snapshot             = var.skip_final_snapshot
-  final_snapshot_identifier       = var.final_snapshot_identifier == "" ? "${var.project_name_prefix}-final-snapshot" : var.final_snapshot_identifier
+  final_snapshot_identifier       = var.final_snapshot_identifier == "" ? "${var.environment}-${local.identifier}-final-snapshot" : var.final_snapshot_identifier
   auto_minor_version_upgrade      = var.auto_minor_version_upgrade
 
 }
 
 resource "aws_rds_cluster" "aurora_cluster" {
   count                               = !var.create_rds && var.create_aurora ? 1 : 0
-  cluster_identifier                  = var.identifier == "" ? "${var.project_name_prefix}" : var.identifier
+  cluster_identifier                  = "${var.environment}-${local.identifier}"
   engine                              = var.engine
   engine_version                      = var.engine_version
   database_name                       = var.database_name
@@ -53,7 +59,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
   backup_retention_period             = var.retention
   db_subnet_group_name                = aws_db_subnet_group.rds_subnet_group.name
   iam_database_authentication_enabled = var.iam_database_authentication_enabled
-  final_snapshot_identifier       = var.final_snapshot_identifier == "" ? "${var.project_name_prefix}-final-snapshot" : var.final_snapshot_identifier
+  final_snapshot_identifier       = var.final_snapshot_identifier == "" ? "${var.environment}-${local.identifier}-final-snapshot" : var.final_snapshot_identifier
   skip_final_snapshot             = var.skip_final_snapshot
   vpc_security_group_ids              = [aws_security_group.rds_db.id]
   apply_immediately                   = var.apply_immediately
@@ -65,7 +71,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
   count                   = var.create_aurora == true ? var.count_aurora_instances : 0
-  identifier              = var.identifier == "" ? "${var.project_name_prefix}-${count.index}" : "${var.identifier}-${count.index}"
+  identifier              = "${var.environment}-${local.identifier}-${count.index}"
   cluster_identifier      = aws_rds_cluster.aurora_cluster[0].id
   instance_class          = var.instance_class
   engine                  = aws_rds_cluster.aurora_cluster[0].engine
