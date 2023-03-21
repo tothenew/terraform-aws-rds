@@ -1,10 +1,10 @@
 module "create_database" {
-  source              = "git::https://github.com/tothenew/terraform-aws-rds.git"
+  source              = "../"
   create_rds     = true
   create_aurora = false
 
-  subnet_ids       = ["subnet-9999999","subnet-99999999"]
-  vpc_id           = "vpc-9999999999"
+  subnet_ids       = ["subnet-01f4d569","subnet-7c920430"]
+  vpc_id           = "vpc-fbbb8393"
   vpc_cidr         = ["172.31.0.0/16"]
 
   publicly_accessible = true
@@ -29,6 +29,6 @@ module "create_database" {
   environment = "dev"
   project = "project-1"
   
-  create_mysql_user = false
+  create_mysql_user = true
   mysql_users = ["user1","user2"]
 }
