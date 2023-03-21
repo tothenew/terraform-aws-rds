@@ -42,6 +42,8 @@ No modules.
 | [aws_rds_cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster) | resource |
 | [aws_rds_cluster_instance](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster_instance) | resource |
 | [aws_ssm_parameter](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
+| [mysql_user](https://registry.terraform.io/providers/petoju/mysql/latest/docs/resources/user) | resource |
+| [mysql_grant](https://registry.terraform.io/providers/winebarrel/mysql/latest/docs/resources/grant) | resource |
 
 ## Usage
 ```
@@ -62,24 +64,27 @@ module "create_database" {
   instance_class = "db.serverless"
   database_name = "mydb"
   username   = "root"
-  identifier = "dev-tothenew-database"
+  identifier = "my-first-db"
   apply_immediately = false
   storage_encrypted = false
-  kms_key_arn = "tothenew"
+  kms_key_arn = "aws/key"
   multi_az = false
-  db_subnet_group_id = "tothenew-subnet-group"
+  db_subnet_group_id = "subnet-group"
   deletion_protection = false
   auto_minor_version_upgrade = false
   count_aurora_instances = 1
   serverlessv2_scaling_configuration_max = 1.0
   serverlessv2_scaling_configuration_min = 0.5
+  
+  create_mysql_user = false
+  mysql_users = ["user1","user2"]
 
   common_tags = {
-    "Project"     = "ToTheNew",
+    "Project"     = "internal",
     "Environment" = "dev"
   }
   environment = "dev"
-  project_name_prefix = "dev-tothenew"
+  project_name_prefix = "dev-project"
 }
 ```
 
@@ -111,8 +116,10 @@ module "create_database" {
 | count_aurora_instances                 | Number of Aurora Instances                                                                                             | `number`       | `1`     |    no    |
 | serverlessv2_scaling_configuration_max | The maximum number of Aurora capacity units (ACUs) for a DB instance in an Aurora Serverless v2 cluster.               | `number`       | `1.0`   |    no    |
 | serverlessv2_scaling_configuration_min | The minimum number of Aurora capacity units (ACUs) for a DB instance in an Aurora Serverless v2 cluster.               | `number`       | `0.5`   |    no    |
+| create_mysql_user                            | Set create_mysql_user to true, for creating mysql users                                                                          | `bool`  | `false`   |    no    |
+| mysql_users                            | list of mysql users                                                                          | `list(string)`  | `n/a`   |    no    |
 | common_tags                            | A map to add common tags to all the resources                                                                          | `map(string)`  | `n/a`   |    no    |
-| environment                            | Environment                                                                                                            | `string`       | `dev`   |   no    |
+| environment                            | Environment                                                                                                            | `string`       | `dev`   |   yes    |
 | project_name_prefix                    | A string value to describe prefix of all the resources                                                                 | `string`       | `n/a`   |   no    |
 
 

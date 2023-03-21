@@ -1,12 +1,12 @@
 resource "aws_security_group" "rds_db" {
-  name   = "rds-${var.environment}-${var.database_name}"
+  name   = "${var.environment}-${local.identifier}-rds-sg"
   vpc_id = var.vpc_id
 
   lifecycle {
     create_before_destroy = true
   }
   tags = {
-    Name = "rds-${var.environment}-${var.database_name}"
+    Name = "${var.environment}-${local.identifier}-rds-sg"
   }
 }
 
