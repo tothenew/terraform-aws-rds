@@ -5,7 +5,7 @@
 
 This is a template to use for baseline. The default actions will provide updates for section bitween Requirements and Outputs.
 
-The following content needed to be created and managed:
+The following  content needed to be created and managed:
  - Introduction
      - Explaination of module 
      - Intended users
