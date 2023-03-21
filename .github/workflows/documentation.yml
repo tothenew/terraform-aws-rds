@@ -11,6 +11,7 @@ jobs:
     - name: Render terraform docs and push changes back to main
       uses: terraform-docs/gh-actions@main
       with:
+        credentials: ${{ secrets.WRKFLW_SECRET}}
         working-dir: .
         output-file: README.md
         output-method: inject
