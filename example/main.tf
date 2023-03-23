@@ -1,11 +1,11 @@
 module "create_database" {
-  source              = "../"
+  source              = "git::https://github.com/tothenew/terraform-aws-rds.git"
   create_rds     = true
   create_aurora = false
 
-  subnet_ids       = ["subnet-01f4d569","subnet-7c920430"]
-  vpc_id           = "vpc-fbbb8393"
-  vpc_cidr         = ["172.31.0.0/16"]
+  subnet_ids       = ["subnet-999999","subnet-9999999"]
+  vpc_id           = "vpc-9999999"
+  vpc_cidr         = ["10.0.0.0/16"]
 
   publicly_accessible = true
   allocated_storage = 10

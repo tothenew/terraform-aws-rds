@@ -1,32 +1,7 @@
-data "aws_ssm_parameter" "rds_endpoint" {
-  depends_on = [
-    aws_ssm_parameter.rds_db_address
-  ]
-  name = var.project == "" ? "/${var.environment}/${local.identifier}/${local.current_day}/rds/endpoint" : "/${var.environment}/${var.project}/${local.identifier}/${local.current_day}/rds/endpoint"
-}
-data "aws_ssm_parameter" "rds_username" {
-  depends_on = [
-    aws_ssm_parameter.rds_db_address
-  ]
-  name = var.project == "" ? "/${var.environment}/${local.identifier}/${local.current_day}/rds/user" : "/${var.environment}/${var.project}/${local.identifier}/${local.current_day}/rds/user"
-}
-data "aws_ssm_parameter" "rds_password" {
-  depends_on = [
-    aws_ssm_parameter.rds_db_address
-  ]
-  name = var.project == "" ? "/${var.environment}/${local.identifier}/${local.current_day}/rds/password" : "/${var.environment}/${var.project}/${local.identifier}/${local.current_day}/rds/password"
-}
-data "aws_ssm_parameter" "rds_db_name" {
-  depends_on = [
-    aws_ssm_parameter.rds_db_address
-  ]
-  name = var.project == "" ? "/${var.environment}/${local.identifier}/${local.current_day}/rds/name" : "/${var.environment}/${var.project}/${local.identifier}/${local.current_day}/rds/name"
-}
-
 provider "mysql" {
-  endpoint = "${data.aws_ssm_parameter.rds_endpoint.value}"
-  username = "${data.aws_ssm_parameter.rds_username.value}"
-  password = "${data.aws_ssm_parameter.rds_password.value}"
+  endpoint = var.create_rds == true ? aws_db_instance.rds_db[0].endpoint : aws_rds_cluster.aurora_cluster[0].endpoint
+  username = var.create_rds == true ? aws_db_instance.rds_db[0].username : aws_rds_cluster.aurora_cluster[0].master_username
+  password = random_string.rds_db_password.result
 }
 
 # Create RDS App users
@@ -47,7 +22,7 @@ resource "mysql_grant" "app_user" {
   count = var.create_mysql_user ? length(var.mysql_users) : 0
   user       = mysql_user.app_user[count.index].user
   host       = mysql_user.app_user[count.index].host
-  database   = data.aws_ssm_parameter.rds_db_name.value
+  database   = var.create_rds == true ? aws_db_instance.rds_db[0].db_name : aws_rds_cluster.aurora_cluster[0].database_name
   privileges = ["SELECT", "UPDATE", "INSERT", "DELETE", "CREATE", "ALTER", "REFERENCES"]
 }
 
