@@ -1,7 +1,7 @@
 provider "mysql" {
-  endpoint = var.create_rds == true ? "${aws_db_instance.rds_db[0].endpoint}" : "${aws_rds_cluster.aurora_cluster[0].endpoint}"
-  username = var.create_rds == true ? "${aws_db_instance.rds_db[0].username}" : "${aws_rds_cluster.aurora_cluster[0].master_username}"
-  password = "${random_string.rds_db_password.result}"
+  endpoint = var.create_rds == true ? aws_db_instance.rds_db[0].endpoint : "${aws_rds_cluster.aurora_cluster[0].endpoint
+  username = var.create_rds == true ? aws_db_instance.rds_db[0].username : "${aws_rds_cluster.aurora_cluster[0].master_username
+  password = random_string.rds_db_password.result
 }
 
 # Create RDS App users
