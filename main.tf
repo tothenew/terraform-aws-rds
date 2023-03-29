@@ -2,7 +2,6 @@ resource "random_string" "rds_db_password" {
   length  = 34
   special = false
 }
-
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = var.db_subnet_group_id
   subnet_ids = var.subnet_ids
@@ -10,7 +9,6 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
     Name = var.db_subnet_group_id
   }
 }
-
 resource "aws_db_instance" "rds_db" {
   count                           = var.create_rds && !var.create_aurora ? 1 : 0
   publicly_accessible             = var.publicly_accessible
@@ -39,7 +37,7 @@ resource "aws_db_instance" "rds_db" {
   skip_final_snapshot             = var.skip_final_snapshot
   final_snapshot_identifier       = var.final_snapshot_identifier == "" ? "${var.project_name_prefix}-final-snapshot" : var.final_snapshot_identifier
   auto_minor_version_upgrade      = var.auto_minor_version_upgrade
-
+  parameter_group_name            = var.db_parameter_group_name == "" ? "${var.identifier}-parameter-group" : var.db_parameter_group_name
 }
 
 resource "aws_rds_cluster" "aurora_cluster" {
@@ -72,4 +70,5 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
   engine                  = aws_rds_cluster.aurora_cluster[0].engine
   engine_version          = aws_rds_cluster.aurora_cluster[0].engine_version
   publicly_accessible     = var.publicly_accessible
+  db_parameter_group_name = var.cluster_parameter_group_name == "" ? "${var.identifier}-parameter-group" : var.cluster_parameter_group_name
 }

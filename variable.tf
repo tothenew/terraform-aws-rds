@@ -216,3 +216,12 @@ variable "vpc_cidr" {
 variable "vpc_id" {
   type = string
 }
+
+variable "db_parameter_group_name" {
+  type = string
+  default = ""
+}
+variable "cluster_parameter_group_name" {
+  type = string
+  default = ""
+}
