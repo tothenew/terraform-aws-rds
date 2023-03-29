@@ -16,6 +16,7 @@ resource "mysql_user" "app_user" {
   user               = var.mysql_users[count.index]
   host               = "%"
   plaintext_password = random_string.app_password[count.index].result
+  depends_on = [aws_db_instance.rds_db, aws_rds_cluster_instance.cluster_instances]
 }
 
 resource "mysql_grant" "app_user" {
