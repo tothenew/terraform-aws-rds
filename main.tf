@@ -44,6 +44,7 @@ resource "aws_db_instance" "rds_db" {
   skip_final_snapshot             = var.skip_final_snapshot
   final_snapshot_identifier       = var.final_snapshot_identifier == "" ? "${var.environment}-${local.identifier}-final-snapshot" : var.final_snapshot_identifier
   auto_minor_version_upgrade      = var.auto_minor_version_upgrade
+  parameter_group_name            = var.create_db_parameter_group == true ? aws_db_parameter_group.rds_custom_db_pg[count.index].name : ""
 
 }
 
@@ -67,6 +68,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
     max_capacity = var.serverlessv2_scaling_configuration_max
     min_capacity = var.serverlessv2_scaling_configuration_min
   }
+  db_cluster_parameter_group_name   = var.create_cluster_parameter_group == true ? aws_rds_cluster_parameter_group.custom_cluster_pg[count.index].name : ""
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
@@ -77,4 +79,27 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
   engine                  = aws_rds_cluster.aurora_cluster[0].engine
   engine_version          = aws_rds_cluster.aurora_cluster[0].engine_version
   publicly_accessible     = var.publicly_accessible
+}
+
+resource "aws_rds_cluster_parameter_group" "custom_cluster_pg" {
+  count = var.create_cluster_parameter_group ? 1 : 0
+
+  name   = var.parameter_group_name == "" ? "${var.environment}-${local.identifier}-cluster-parameter-group" : var.parameter_group_name
+  description = "RDS ${var.environment}-${local.identifier} cluster parameter group"
+  family      = var.family
+    lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_db_parameter_group" "rds_custom_db_pg" {
+  count = var.create_db_parameter_group ? 1 : 0
+
+  name   = var.parameter_group_name == "" ? "${var.environment}-${local.identifier}-parameter-group" : var.parameter_group_name
+  description = "RDS ${var.environment}-${local.identifier} parameter group"
+  family      = var.family
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
