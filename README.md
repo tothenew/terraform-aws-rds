@@ -44,6 +44,8 @@ No modules.
 | [aws_ssm_parameter](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
 | [mysql_user](https://registry.terraform.io/providers/petoju/mysql/latest/docs/resources/user) | resource |
 | [mysql_grant](https://registry.terraform.io/providers/winebarrel/mysql/latest/docs/resources/grant) | resource |
+| [aws_db_parameter_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_parameter_group) | resource |
+| [aws_rds_cluster_parameter_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_cluster_parameter_group) | resource |
 
 ## Usage
 ```
