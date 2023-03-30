@@ -52,22 +52,21 @@ module "create_database" {
   create_rds     = false
   create_aurora = true
 
-  subnet_ids       = ["subnet-99999999999999","subnet-99999999999999"]
-  vpc_id           = "vpc-99999999999999"
+  subnet_ids       = ["subnet-999999","subnet-999999"]
+  vpc_id           = "vpc-999999"
   vpc_cidr         = ["172.31.0.0/16"]
 
   publicly_accessible = true
   allocated_storage = 10
   max_allocated_storage = 20
-  engine = "aurora-postgresql"
-  engine_version = "13.6"
+  engine = "aurora-mysql"
+  engine_version = "8.0.mysql_aurora.3.02.0"
   instance_class = "db.serverless"
   database_name = "mydb"
   username   = "root"
-  identifier = "my-first-db"
+  identifier = "final-test"
   apply_immediately = false
   storage_encrypted = false
-  kms_key_arn = "aws/key"
   multi_az = false
   db_subnet_group_id = "subnet-group"
   deletion_protection = false
@@ -75,16 +74,13 @@ module "create_database" {
   count_aurora_instances = 1
   serverlessv2_scaling_configuration_max = 1.0
   serverlessv2_scaling_configuration_min = 0.5
-  
-  create_mysql_user = false
-  mysql_users = ["user1","user2"]
 
-  common_tags = {
-    "Project"     = "internal",
-    "Environment" = "dev"
-  }
   environment = "dev"
-  project_name_prefix = "dev-project"
+  project = "project-1"
+  create_cluster_parameter_group = true
+  family = "aurora-mysql8.0"
+  create_mysql_user = true
+  mysql_users = ["user1","user2"]
 }
 ```
 
@@ -120,7 +116,10 @@ module "create_database" {
 | mysql_users                            | list of mysql users                                                                          | `list(string)`  | `n/a`   |    no    |
 | common_tags                            | A map to add common tags to all the resources                                                                          | `map(string)`  | `n/a`   |    no    |
 | environment                            | Environment                                                                                                            | `string`       | `dev`   |   yes    |
-| project_name_prefix                    | A string value to describe prefix of all the resources                                                                 | `string`       | `n/a`   |   no    |
+| family                    | Parameter group family                                                                 | `string`       | `n/a`   |   no    |
+| parameter_group_name                    | Name of the DB parameter group to associate or create                                                                 | `string`       | `n/a`   |   no    |
+| create_db_parameter_group                    | Whether to create a database parameter group                                                                 | `bool`       | `false`   |   no    |
+| create_cluster_parameter_group                    | Whether to create a cluster parameter group                                                                 | `bool`       | `false`   |   no    |
 
 
 ## Outputs
