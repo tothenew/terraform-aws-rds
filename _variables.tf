@@ -229,3 +229,24 @@ variable "create_mysql_user" {
   description = "If you want to create rds MySQL or PostgreSQL enable this check"
   default     = false
 }
+
+variable "family" {
+  type        = string
+  description = "Parameter group family"
+  default     = ""
+}
+
+variable "parameter_group_name" {
+  type        = string
+  default     = ""
+}
+
+variable "create_db_parameter_group" {
+  type      = bool
+  default   = false
+}
+
+variable "create_cluster_parameter_group" {
+  type      = bool
+  default   = false
+}

@@ -1,18 +1,18 @@
 module "create_database" {
   source              = "git::https://github.com/tothenew/terraform-aws-rds.git"
-  create_rds     = true
-  create_aurora = false
+  create_rds     = false
+  create_aurora = true
 
-  subnet_ids       = ["subnet-9999999","subnet-99999999"]
-  vpc_id           = "vpc-9999999999"
+  subnet_ids       = ["subnet-999999","subnet-999999"]
+  vpc_id           = "vpc-999999"
   vpc_cidr         = ["172.31.0.0/16"]
 
   publicly_accessible = true
   allocated_storage = 10
   max_allocated_storage = 20
-  engine = "mysql"
-  engine_version = "5.7"
-  instance_class = "db.t2.micro"
+  engine = "aurora-mysql"
+  engine_version = "8.0.mysql_aurora.3.02.0"
+  instance_class = "db.serverless"
   database_name = "mydb"
   username   = "root"
   identifier = "final-test"
@@ -28,7 +28,8 @@ module "create_database" {
 
   environment = "dev"
   project = "project-1"
-  
-  create_mysql_user = false
+  create_cluster_parameter_group = true
+  family = "aurora-mysql8.0"
+  create_mysql_user = true
   mysql_users = ["user1","user2"]
 }
