@@ -19,3 +19,11 @@
 #  value     = var.create_rds == true ? aws_db_instance.rds_db[0].port : aws_rds_cluster.aurora_cluster[0].port
 #  sensitive = true
 #}
+
+output "username" {
+  value = var.create_aurora == true ? var.master_username : ""
+}
+
+output "password" {
+  value     = var.create_aurora == true ? var.create_username_password ? random_string.rds_db_password[0].result : var.master_password : ""
+}
