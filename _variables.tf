@@ -260,37 +260,23 @@ variable "storage_type" {
   default     = "gp3"
 }
 
-variable "iops" {
-  type        = number
-  description = "The amount of provisioned IOPS. Setting this implies a storage_type of io1"
-  default     = null
-}
-
-variable "retention" {
-  type        = number
-  description = "Snapshot retention period in days"
-  default     = 30
-}
-
 variable "storage_encrypted" {
   type        = bool
   description = "Enables storage encryption"
   default     = true
 }
 
-variable "multi_az" {
-  description = "Deploy multi-az instance database"
+variable "secret_method" {
+  description = "Use ssm for SSM parameters store which is the default option, or secretsmanager for AWS Secrets Manager"
   type        = bool
   default     = false
 }
 
-variable "backup_window" {
-  description = "(RDS Only) The daily time range (in UTC) during which automated backups are created if they are enabled. Example: '09:46-10:16'. Must not overlap with maintenance_window"
+variable "ssm_kms_key_id" {
   type        = string
-  default     = "03:00-03:30"
+  default     = ""
+  description = "KMS Key Id to use a CMK instead of default shared key for SSM parameters"
 }
-
-
 
 #variable "username" {
 #  type        = string
@@ -351,17 +337,9 @@ variable "backup_window" {
 #  default     = ""
 #}
 #
-#variable "secret_method" {
-#  description = "Use ssm for SSM parameters store which is the default option, or secretsmanager for AWS Secrets Manager"
-#  type        = string
-#  default     = "ssm"
-#}
+
 #
-#variable "ssm_kms_key_id" {
-#  type        = string
-#  default     = ""
-#  description = "KMS Key Id to use a CMK instead of default shared key for SSM parameters"
-#}
+
 #
 #variable "environment" {
 #  type        = string

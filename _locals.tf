@@ -4,9 +4,7 @@ locals {
 
   default_database_name = var.name == "" ? "${terraform.workspace}${var.database_module}" : "${var.name}${var.database_module}"
 
-  #  project      = var.project
-  #  identifier   = "${var.identifier}-${random_string.unique_string.result}"
-  #  today        = timestamp()
-  #  current_day  = formatdate("YYYYMMDD", local.today)
-  #  current_time = formatdate("hhmmss", local.today)
+  today        = timestamp()
+  current_day  = formatdate("YYYYMMDD", local.today)
+  current_time = formatdate("hhmmss", local.today)
 }
