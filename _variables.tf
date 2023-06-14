@@ -278,76 +278,8 @@ variable "ssm_kms_key_id" {
   description = "KMS Key Id to use a CMK instead of default shared key for SSM parameters"
 }
 
-#variable "username" {
-#  type        = string
-#  description = "DB User"
-#}
-#
-#variable "create_rds" {
-#  type        = bool
-#  description = "If you want to create rds MySQL or PostgreSQL enable this check"
-#  default     = true
-#}
-#
-#variable "project" {
-#  description = "A string value to describe prefix of all the resources"
-#  type        = string
-#  default     = ""
-#}
-#
-#variable "identifier" {
-#  type        = string
-#  default     = "database"
-#  description = "Optional identifier for DB. If not passed, {environment}-{name} will be used"
-#}
-#
-#variable "snapshot_identifier" {
-#  type        = string
-#  default     = ""
-#  description = "Pass a snapshot identifier for the database to be created from this snapshot"
-#}
-#
-#variable "final_snapshot_identifier" {
-#  type        = string
-#  default     = ""
-#  description = "Pass the final snapshot identifier for the final snapshot to be created after the database is destroyed."
-#}
-#
-#variable "count_aurora_instances" {
-#  description = "Number of Aurora Instances"
-#  type        = number
-#  default     = "1"
-#}
-#
-#variable "serverlessv2_scaling_configuration_max" {
-#  description = "Number of Aurora Instances"
-#  type        = number
-#  default     = "1.0"
-#}
-#
-#variable "serverlessv2_scaling_configuration_min" {
-#  description = "Number of Aurora Instances"
-#  type        = number
-#  default     = "0.5"
-#}
-#
-#variable "db_subnet_group_id" {
-#  description = "RDS Subnet Group Name"
-#  type        = string
-#  default     = ""
-#}
-#
-
-#
-
-#
-#variable "environment" {
-#  type        = string
-#  default     = "dev"
-#  description = "description"
-#}
-#
-#variable "mysql_users" {
-#  type = list(string)
-#  default = [""]
-#}
+variable "mysql_users" {
+  type        = list(string)
+  description = "Create MySql User in database"
+  default     = []
+}

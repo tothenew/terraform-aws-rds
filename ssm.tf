@@ -1,9 +1,8 @@
 resource "aws_ssm_parameter" "rds_db_password" {
   count       = var.secret_method ? 1 : 0
-  name        = "/${local.project_name_prefix}/rds/${local.current_day}/password"
+  name        = "/${local.project_name_prefix}/rds/${local.current_day}/master/password"
   description = "RDS Password"
   type        = "SecureString"
-  key_id      = var.ssm_kms_key_id
   value       = random_string.rds_db_password[0].result
 
   lifecycle {
@@ -13,10 +12,9 @@ resource "aws_ssm_parameter" "rds_db_password" {
 
 resource "aws_ssm_parameter" "rds_db_user" {
   count       = var.secret_method ? 1 : 0
-  name        = "/${local.project_name_prefix}/rds/${local.current_day}/user"
+  name        = "/${local.project_name_prefix}/rds/${local.current_day}/master/username"
   description = "RDS User"
   type        = "SecureString"
-  key_id      = var.ssm_kms_key_id
   value       = var.master_username
 }
 
