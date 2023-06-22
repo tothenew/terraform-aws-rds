@@ -192,7 +192,7 @@ variable "deletion_protection" {
 variable "instance_class" {
   type        = string
   description = ""
-  default     = "db.t3.medium"
+  default     = "db.t4g.medium"
 }
 
 variable "copy_tags_to_snapshot" {
