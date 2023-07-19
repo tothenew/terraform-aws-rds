@@ -5,13 +5,13 @@ provider "mysql" {
 }
 
 resource "random_string" "app_password" {
-  count   = var.mysql_users ? length(var.mysql_users) : 0
+  count   = length(var.mysql_users) > 0 ? length(var.mysql_users) : 0
   length  = 16
   special = false
 }
 
 resource "mysql_user" "app_user" {
-  count              = var.mysql_users ? length(var.mysql_users) : 0
+  count              = length(var.mysql_users) > 0 ? length(var.mysql_users) : 0
   user               = var.mysql_users[count.index]
   host               = "%"
   plaintext_password = random_string.app_password[count.index].result
@@ -19,7 +19,7 @@ resource "mysql_user" "app_user" {
 }
 
 resource "mysql_grant" "app_user" {
-  count      = var.mysql_users ? length(var.mysql_users) : 0
+  count      = length(var.mysql_users) > 0 ? length(var.mysql_users) : 0
   user       = mysql_user.app_user[count.index].user
   host       = mysql_user.app_user[count.index].host
   database   = var.database_name == "" ? local.default_database_name : var.database_name
@@ -27,7 +27,7 @@ resource "mysql_grant" "app_user" {
 }
 
 resource "aws_ssm_parameter" "app_username" {
-  count       = var.mysql_users ? length(var.mysql_users) : 0
+  count       = length(var.mysql_users) > 0 ? length(var.mysql_users) : 0
   name        = "/${local.project_name_prefix}/rds/${local.current_day}/app/${var.mysql_users[count.index]}/username"
   description = "${var.mysql_users[count.index]} Username"
   type        = "String"
@@ -35,7 +35,7 @@ resource "aws_ssm_parameter" "app_username" {
 
 }
 resource "aws_ssm_parameter" "app_password" {
-  count       = var.mysql_users ? length(var.mysql_users) : 0
+  count       = length(var.mysql_users) > 0 ? length(var.mysql_users) : 0
   name        = "/${local.project_name_prefix}/rds/${local.current_day}/app/${var.mysql_users[count.index]}/password"
   description = "${var.mysql_users[count.index]} Password"
   type        = "SecureString"
