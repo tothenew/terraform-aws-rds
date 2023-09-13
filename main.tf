@@ -7,7 +7,7 @@ resource "random_string" "unique_string" {
 resource "random_string" "rds_db_password" {
   count   = var.create_username_password ? 1 : 0
   length  = 16
-  special = false
+  special = true
 }
 
 resource "aws_db_subnet_group" "subnet_group" {
@@ -88,7 +88,9 @@ resource "aws_db_instance" "rds_instance" {
   db_name                    = var.database_name == "" ? local.default_database_name : var.database_name
   backup_retention_period    = var.backup_retention_period
   username                   = var.master_username
-  password                   = random_string.rds_db_password.result
+  # password                   = var.master_password
+  # password                   = random_string.rds_db_password.result
+  # password                   = var.create_username_password ? random_string.rds_db_password[0].result : var.master_password
   db_subnet_group_name       = var.create_subnet_group ? aws_db_subnet_group.subnet_group[0].name : var.subnet_group_name
   vpc_security_group_ids     = var.create_security_group ? [aws_security_group.security_group[0].id] : var.security_group_ids
   apply_immediately          = var.apply_immediately
