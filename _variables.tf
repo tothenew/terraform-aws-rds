@@ -249,13 +249,13 @@ variable "kms_key_arn" {
 variable "allocated_storage" {
   type        = number
   description = "Storage size in GB"
-  default     = 10
+  default     = 20
 }
 
 variable "max_allocated_storage" {
   type        = number
   description = "Argument higher than the allocated_storage to enable Storage Autoscaling, size in GB. 0 to disable Storage Autoscaling"
-  default     = 20
+  default     = 50
 }
 
 variable "storage_type" {
