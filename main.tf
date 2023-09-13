@@ -90,7 +90,7 @@ resource "aws_db_instance" "rds_instance" {
   username                   = var.master_username
   # password                   = var.master_password
   # password                   = random_string.rds_db_password.result
-  password                   = var.create_username_password ? random_string.rds_db_password[0].result : var.master_password
+  password                   = "narender"
   db_subnet_group_name       = var.create_subnet_group ? aws_db_subnet_group.subnet_group[0].name : var.subnet_group_name
   vpc_security_group_ids     = var.create_security_group ? [aws_security_group.security_group[0].id] : var.security_group_ids
   apply_immediately          = var.apply_immediately
