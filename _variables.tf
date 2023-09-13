@@ -118,20 +118,20 @@ variable "parameter_family" {
   type        = string
   description = "The family of the DB parameter group for mysql(aurora-mysql5.7) or postgresql(aurora-postgresql15)"
   # default     = "aurora-mysql5.7"
-  default = "mysql8.0"
+  default = "aurora-mysql8.0"
 }
 
 variable "engine" {
   type        = string
   description = "The name of the database engine to be used for this DB cluster for mysql(aurora-mysql, mysql) or postgresql(aurora-postgresql, postgresql)"
-  default     = "mysql"
+  default     = "aurora-mysql"
 }
 
 variable "engine_version" {
   type        = string
   description = "The name of the database engine to be used for this DB cluster for mysql(5.7.mysql_aurora.2.10.2, 5.7) or postgresql(13.6)"
-  # default     = "5.7.mysql_aurora.2.11.2"
-  default = "8.0.34"
+  default     = "8.0.mysql_aurora.3.04.0"
+  # default = "8.0.34"
 }
 
 variable "availability_zones" {
