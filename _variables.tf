@@ -7,8 +7,8 @@ variable "name" {
 variable "create_aurora" {
   type        = bool
   description = "If you want to create Aurora MySQL or PostgreSQL enable this check"
-  # default     = true
-  default     = false
+  default     = true
+  # default     = false
 }
 
 variable "database_module" {
