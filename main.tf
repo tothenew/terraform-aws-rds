@@ -39,7 +39,7 @@ resource "aws_rds_cluster" "rds_cluster" {
   availability_zones                  = var.availability_zones
   database_name                       = var.database_name == "" ? local.default_database_name : var.database_name
   allocated_storage                   = 256
-  db_cluster_instance_class           = "db.r6gd.large"
+  db_cluster_instance_class           = "db.r6g.large"
   # iops                                = 2500
   storage_type                        = "io1"
   master_username                     = var.master_username
