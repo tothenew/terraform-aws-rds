@@ -190,7 +190,8 @@ variable "maintenance_window" {
 variable "deletion_protection" {
   description = "The database can't be deleted when this value is set to true."
   type        = bool
-  default     = true
+  # default     = true
+  default = false
 }
 
 variable "instance_class" {

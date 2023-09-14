@@ -38,10 +38,10 @@ resource "aws_rds_cluster" "rds_cluster" {
   engine_version                      = var.engine_version
   availability_zones                  = var.availability_zones
   database_name                       = var.database_name == "" ? local.default_database_name : var.database_name
-  # db_cluster_instance_class           = "db.r6gd.xlarge"
+  # allocated_storage                   = 256
+  # db_cluster_instance_class           = "db.r6gd.large"
+  # iops                                = 2500
   # storage_type                        = "io1"
-  # allocated_storage                   = "100"
-  # iops                                = "1000"
   master_username                     = var.master_username
   master_password                     = var.create_username_password ? random_string.rds_db_password[0].result : var.master_password
   backup_retention_period             = var.backup_retention_period
