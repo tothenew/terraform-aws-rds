@@ -79,25 +79,6 @@ resource "aws_rds_cluster_instance" "rds_cluster_instance" {
   tags                         = merge(local.common_tags, tomap({ "Name" : local.project_name_prefix }))
 }
 
-resource "aws_rds_cluster_instance" "rds_cluster_instance_read_replica" {
-  count                        = var.create_aurora ? 1 : 0
-  identifier                   = local.project_name_prefix
-  cluster_identifier           = aws_rds_cluster.rds_cluster[0].cluster_identifier
-  engine                       = aws_rds_cluster.rds_cluster[0].engine
-  engine_version               = aws_rds_cluster.rds_cluster[0].engine_version
-  db_subnet_group_name         = aws_rds_cluster.rds_cluster[0].db_subnet_group_name
-  db_parameter_group_name      = var.create_db_parameter_group ? aws_db_parameter_group.parameter_group[0].name : var.db_parameter_group_name
-  instance_class               = var.instance_class
-  preferred_maintenance_window = var.maintenance_window
-  apply_immediately            = var.apply_immediately
-  auto_minor_version_upgrade   = var.auto_minor_version_upgrade
-  publicly_accessible          = var.publicly_accessible
-  writer                       = false
-  
-  tags                         = merge(local.common_tags, tomap({ "Name" : local.project_name_prefix }))
-}
-
-
 resource "aws_db_instance" "rds_instance" {
   count                      = var.create_aurora ? 0 : 1
   publicly_accessible        = var.publicly_accessible
