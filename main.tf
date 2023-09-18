@@ -79,7 +79,7 @@ resource "aws_rds_cluster_instance" "rds_cluster_instance" {
   tags                         = merge(local.common_tags, tomap({ "Name" : local.project_name_prefix }))
 }
 
-resource "aws_db_instance" "rds_aurora_read_replica" {
+resource "aws_rds_cluster_instance" "rds_aurora_read_replica" {
   count                 = var.create_aurora ? 1 : 0
   identifier            = "${local.project_name_prefix}-read-replica"
   allocated_storage     = 256  # You can adjust this as needed
