@@ -62,7 +62,6 @@ resource "aws_rds_cluster" "rds_cluster" {
 resource "aws_rds_cluster_instance" "rds_cluster_instance" {
   count                        = var.create_aurora ? 1 : 0
   identifier                   = local.project_name_prefix
-  availability_zones           = var.availability_zones
   cluster_identifier           = aws_rds_cluster.rds_cluster[0].cluster_identifier
   engine                       = aws_rds_cluster.rds_cluster[0].engine
   engine_version               = aws_rds_cluster.rds_cluster[0].engine_version
