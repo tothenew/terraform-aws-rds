@@ -118,7 +118,7 @@ variable "parameter_family" {
   type        = string
   description = "The family of the DB parameter group for mysql(aurora-mysql5.7) or postgresql(aurora-postgresql15)"
   # default     = "aurora-mysql5.7"
-  default     = "mysql5.7"
+  default     = "mysql8.0"
   # default = "aurora-mysql8.0"
 }
 
