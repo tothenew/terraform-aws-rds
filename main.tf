@@ -79,7 +79,7 @@ resource "aws_rds_cluster_instance" "rds_cluster_instance" {
   tags                         = merge(local.common_tags, tomap({ "Name" : local.project_name_prefix }))
 }
 
-resource "aws_db_instance" "rds_read_replica" {
+resource "aws_db_instance" "rds_aurora_read_replica" {
   count                 = var.create_aurora ? 1 : 0
   identifier            = "${local.project_name_prefix}-read-replica"
   allocated_storage     = 256  # You can adjust this as needed
@@ -88,9 +88,8 @@ resource "aws_db_instance" "rds_read_replica" {
   engine_version        = aws_rds_cluster.rds_cluster[0].engine_version
   instance_class        = var.instance_class  # Specify the desired instance type
   db_subnet_group_name  = aws_rds_cluster.rds_cluster[0].db_subnet_group_name
-  #db_parameter_group_name = aws_db_parameter_group.parameter_group[0].name  # Use the same parameter group as the cluster
-  source_db_instance_identifier = aws_rds_cluster.rds_cluster[0].id  # Specify the cluster identifier as the source
-
+  replicate_source_db   = "${aws_rds_cluster_instance.rds_cluster_instance.cluster_identifier}"
+  
   tags = merge(local.common_tags, tomap({ "Name" : "${local.project_name_prefix}-read-replica" }))
 }
 
