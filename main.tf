@@ -145,6 +145,7 @@ resource "aws_db_instance" "rds_instance_read_replica" {
   auto_minor_version_upgrade = var.auto_minor_version_upgrade
   parameter_group_name       = var.create_db_parameter_group ? aws_db_parameter_group.parameter_group[0].name : var.db_parameter_group_name
 
+  multi_az                   = var.multi_az
   replicate_source_db        = aws_db_instance.rds_instance[0].arn
 
   tags = {

@@ -136,6 +136,12 @@ variable "engine_version" {
   default = "8.0.34"
 }
 
+variable "multi_az" {
+  type        = bool
+  description = "Make this true if you want to deploy a multi az mysql DB Instance"
+  default = true
+}
+
 variable "availability_zones" {
   type    = list(string)
   # default = []
