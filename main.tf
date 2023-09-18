@@ -64,7 +64,7 @@ resource "aws_rds_cluster" "rds_cluster" {
 }
 
 resource "aws_rds_cluster_instance" "rds_cluster_instance" {
-  count                        = var.create_aurora ? 2 : 0
+  count                        = var.create_aurora ? 1 : 0
   identifier                   = local.project_name_prefix
   cluster_identifier           = aws_rds_cluster.rds_cluster[0].cluster_identifier
   engine                       = aws_rds_cluster.rds_cluster[0].engine
