@@ -64,7 +64,7 @@ resource "aws_rds_cluster" "rds_cluster" {
 }
 
 resource "aws_rds_cluster_instance" "rds_cluster_instance" {
-  count                        = var.create_aurora ? 1 : 0
+  count                        = var.create_aurora ? 2 : 0
   identifier                   = local.project_name_prefix
   cluster_identifier           = aws_rds_cluster.rds_cluster[0].cluster_identifier
   engine                       = aws_rds_cluster.rds_cluster[0].engine
@@ -79,21 +79,20 @@ resource "aws_rds_cluster_instance" "rds_cluster_instance" {
   tags                         = merge(local.common_tags, tomap({ "Name" : local.project_name_prefix }))
 }
 
-resource "aws_db_instance" "rds_aurora_read_replica" {
-  count                 = var.create_aurora ? 1 : 0
-  identifier            = "${local.project_name_prefix}-read-replica"
-  allocated_storage     = 256  # You can adjust this as needed
-  storage_type          = "gp2"  # You can adjust the storage type as needed
-  engine                = aws_rds_cluster.rds_cluster[0].engine
-  engine_version        = aws_rds_cluster.rds_cluster[0].engine_version
-  instance_class        = var.instance_class  # Specify the desired instance type
-  db_subnet_group_name  = aws_rds_cluster.rds_cluster[0].db_subnet_group_name
-  replicate_source_db   = aws_rds_cluster.rds_cluster[0].cluster_identifier
-  # source_db_instance_identifier = aws_rds_cluster.rds_cluster[0].id
-  depends_on = [aws_rds_cluster.rds_cluster]
+# resource "aws_db_instance" "rds_aurora_read_replica" {
+#   count                 = var.create_aurora ? 1 : 0
+#   identifier            = "${local.project_name_prefix}-read-replica"
+#   allocated_storage     = 256  # You can adjust this as needed
+#   storage_type          = "gp2"  # You can adjust the storage type as needed
+#   engine                = aws_rds_cluster.rds_cluster[0].engine
+#   engine_version        = aws_rds_cluster.rds_cluster[0].engine_version
+#   instance_class        = var.instance_class  # Specify the desired instance type
+#   db_subnet_group_name  = aws_rds_cluster.rds_cluster[0].db_subnet_group_name
+#   replicate_source_db   = aws_rds_cluster.rds_cluster[0].cluster_identifier
+#   depends_on = [aws_rds_cluster.rds_cluster]
   
-  tags = merge(local.common_tags, tomap({ "Name" : "${local.project_name_prefix}-read-replica" }))
-}
+#   tags = merge(local.common_tags, tomap({ "Name" : "${local.project_name_prefix}-read-replica" }))
+# }
 
 
 resource "aws_db_instance" "rds_instance" {
