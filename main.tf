@@ -88,7 +88,7 @@ resource "aws_db_instance" "rds_read_replica" {
   engine_version        = aws_rds_cluster.rds_cluster[0].engine_version
   instance_class        = var.instance_class  # Specify the desired instance type
   db_subnet_group_name  = aws_rds_cluster.rds_cluster[0].db_subnet_group_name
-  db_parameter_group_name = aws_db_parameter_group.parameter_group[0].name  # Use the same parameter group as the cluster
+  #db_parameter_group_name = aws_db_parameter_group.parameter_group[0].name  # Use the same parameter group as the cluster
   source_db_instance_identifier = aws_rds_cluster.rds_cluster[0].id  # Specify the cluster identifier as the source
 
   tags = merge(local.common_tags, tomap({ "Name" : "${local.project_name_prefix}-read-replica" }))
