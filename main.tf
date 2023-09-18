@@ -92,8 +92,7 @@ resource "aws_rds_cluster_instance" "rds_cluster_instance_read_replica" {
   apply_immediately            = var.apply_immediately
   auto_minor_version_upgrade   = var.auto_minor_version_upgrade
   publicly_accessible          = var.publicly_accessible
-  
-  replicate_source_db          = aws_rds_cluster_instance.rds_cluster_instance[0].arn
+  writer                       = false
   
   tags                         = merge(local.common_tags, tomap({ "Name" : local.project_name_prefix }))
 }
