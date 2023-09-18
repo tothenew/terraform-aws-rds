@@ -122,3 +122,32 @@ resource "aws_db_instance" "rds_instance" {
   auto_minor_version_upgrade = var.auto_minor_version_upgrade
   parameter_group_name       = var.create_db_parameter_group ? aws_db_parameter_group.parameter_group[0].name : var.db_parameter_group_name
 }
+
+resource "aws_db_instance" "rds_instance_read_replica" {
+  count                      = var.create_aurora ? 0 : 1
+  publicly_accessible        = var.publicly_accessible
+  allocated_storage          = var.allocated_storage
+  max_allocated_storage      = var.max_allocated_storage
+  storage_type               = var.storage_type
+  engine                     = var.engine
+  engine_version             = var.engine_version
+  identifier                 = "${local.project_name_prefix}-read-replica"
+  instance_class             = var.instance_class
+  db_subnet_group_name       = var.create_subnet_group ? aws_db_subnet_group.subnet_group[0].name : var.subnet_group_name
+  vpc_security_group_ids     = var.create_security_group ? [aws_security_group.security_group[0].id] : var.security_group_ids
+  apply_immediately          = var.apply_immediately
+  storage_encrypted          = var.storage_encrypted
+  kms_key_id                 = var.storage_encrypted ? aws_kms_key.kms_key[0].arn : null
+  deletion_protection        = var.deletion_protection
+  maintenance_window         = var.maintenance_window
+  backup_window              = var.preferred_backup_window
+  skip_final_snapshot        = var.skip_final_snapshot
+  auto_minor_version_upgrade = var.auto_minor_version_upgrade
+  parameter_group_name       = var.create_db_parameter_group ? aws_db_parameter_group.parameter_group[0].name : var.db_parameter_group_name
+
+  source_db_instance_identifier = aws_db_instance.rds_instance[0].id
+
+  tags = {
+    Name = "${local.project_name_prefix}-read-replica"
+  }
+}
