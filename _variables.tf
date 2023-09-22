@@ -139,7 +139,7 @@ variable "multi_az" {
 
 variable "read_replica" {
   type        = bool
-  description = "Make this true if you want to deploy a read replica of mysql DB Instance"
+  description = "Make this true if you want to deploy a read replica of Aurora instance or mysql DB Instance"
   default = false
 }
 
