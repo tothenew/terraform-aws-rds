@@ -7,8 +7,7 @@ variable "name" {
 variable "create_aurora" {
   type        = bool
   description = "If you want to create Aurora MySQL or PostgreSQL enable this check"
-  # default     = true
-  default     = false
+  default     = true
 }
 
 variable "database_module" {
@@ -117,22 +116,19 @@ variable "subnet_ids" {
 variable "parameter_family" {
   type        = string
   description = "The family of the DB parameter group for mysql(aurora-mysql8.0) or postgresql(aurora-postgresql15)"
-  # default = "aurora-mysql8.0"
-  default = "mysql8.0"
+  default = "aurora-mysql8.0"
 }
 
 variable "engine" {
   type        = string
   description = "The name of the database engine to be used for this DB cluster for mysql(aurora-mysql, mysql) or postgresql(aurora-postgresql, postgresql)"
-  # default     = "aurora-mysql"
-  default     = "mysql"
+  default     = "aurora-mysql"
 }
 
 variable "engine_version" {
   type        = string
   description = "The name of the database engine to be used for this DB cluster for mysql(8.0.mysql_aurora.3.02.0, 8.0) or postgresql(13.6)"
-  # default     = "8.0.mysql_aurora.3.02.0"
-  default     = "8.0"
+  default     = "8.0.mysql_aurora.3.02.0"
 }
 
 variable "multi_az" {
@@ -144,7 +140,7 @@ variable "multi_az" {
 variable "read_replica" {
   type        = bool
   description = "Make this true if you want to deploy a read replica of mysql DB Instance"
-  default = true
+  default = false
 }
 
 variable "availability_zones" {
