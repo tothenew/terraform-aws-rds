@@ -127,7 +127,7 @@ variable "engine" {
 
 variable "engine_version" {
   type        = string
-  description = "The name of the database engine to be used for this DB cluster for mysql(5.7.mysql_aurora.2.10.2, 5.7) or postgresql(13.6)"
+  description = "The name of the database engine to be used for this DB cluster for mysql(8.0.mysql_aurora.3.02.0, 8.0) or postgresql(13.6)"
   default     = "8.0.mysql_aurora.3.02.0"
 }
 
