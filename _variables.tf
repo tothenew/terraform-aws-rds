@@ -137,6 +137,12 @@ variable "multi_az" {
   default = false
 }
 
+variable "read_replica" {
+  type        = bool
+  description = "Make this true if you want to deploy a read replica of mysql DB Instance"
+  default = false
+}
+
 variable "availability_zones" {
   type    = list(string)
   default = []
