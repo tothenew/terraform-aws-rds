@@ -8,7 +8,6 @@ variable "create_aurora" {
   type        = bool
   description = "If you want to create Aurora MySQL or PostgreSQL enable this check"
   default     = true
-  # default     = false
 }
 
 variable "database_module" {
@@ -116,9 +115,7 @@ variable "subnet_ids" {
 
 variable "parameter_family" {
   type        = string
-  description = "The family of the DB parameter group for mysql(aurora-mysql5.7) or postgresql(aurora-postgresql15)"
-  # default     = "aurora-mysql5.7"
-  # default     = "mysql8.0"
+  description = "The family of the DB parameter group for mysql(aurora-mysql8.0) or postgresql(aurora-postgresql15)"
   default = "aurora-mysql8.0"
 }
 
@@ -126,26 +123,24 @@ variable "engine" {
   type        = string
   description = "The name of the database engine to be used for this DB cluster for mysql(aurora-mysql, mysql) or postgresql(aurora-postgresql, postgresql)"
   default     = "aurora-mysql"
-  # default     = "mysql"
 }
 
 variable "engine_version" {
   type        = string
   description = "The name of the database engine to be used for this DB cluster for mysql(5.7.mysql_aurora.2.10.2, 5.7) or postgresql(13.6)"
   default     = "8.0.mysql_aurora.3.02.0"
-  # default = "8.0.34"
 }
 
 variable "multi_az" {
   type        = bool
   description = "Make this true if you want to deploy a multi az mysql DB Instance"
-  default = true
+  default = false
 }
 
 variable "availability_zones" {
   type    = list(string)
-  # default = []
-  default = [ "us-east-1a", "us-east-1b", "us-east-1c" ]
+  default = []
+  # default = [ "us-east-1a", "us-east-1b", "us-east-1c" ]
 }
 
 variable "database_name" {
@@ -198,8 +193,7 @@ variable "maintenance_window" {
 variable "deletion_protection" {
   description = "The database can't be deleted when this value is set to true."
   type        = bool
-  # default     = true
-  default = false
+  default     = true
 }
 
 variable "instance_class" {
@@ -258,13 +252,13 @@ variable "kms_key_arn" {
 variable "allocated_storage" {
   type        = number
   description = "Storage size in GB"
-  default     = 20
+  default     = 10
 }
 
 variable "max_allocated_storage" {
   type        = number
   description = "Argument higher than the allocated_storage to enable Storage Autoscaling, size in GB. 0 to disable Storage Autoscaling"
-  default     = 50
+  default     = 20
 }
 
 variable "storage_type" {

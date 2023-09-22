@@ -105,7 +105,6 @@ resource "aws_db_instance" "rds_instance" {
   db_name                    = var.database_name == "" ? local.default_database_name : var.database_name
   backup_retention_period    = var.backup_retention_period
   username                   = var.master_username
-  # password                   = var.master_password
   password                   = var.create_username_password ? random_string.rds_db_password[0].result : var.master_password
   db_subnet_group_name       = var.create_subnet_group ? aws_db_subnet_group.subnet_group[0].name : var.subnet_group_name
   vpc_security_group_ids     = var.create_security_group ? [aws_security_group.security_group[0].id] : var.security_group_ids
@@ -118,11 +117,10 @@ resource "aws_db_instance" "rds_instance" {
   skip_final_snapshot        = var.skip_final_snapshot
   auto_minor_version_upgrade = var.auto_minor_version_upgrade
   parameter_group_name       = var.create_db_parameter_group ? aws_db_parameter_group.parameter_group[0].name : var.db_parameter_group_name
-  
   multi_az                   = var.multi_az
 }
 
-resource "aws_db_instance" "rds_instance_read_replica" {
+resource "aws_db_instance" "read_replica" {
   count                      = var.create_aurora ? 0 : 1
   publicly_accessible        = var.publicly_accessible
   allocated_storage          = var.allocated_storage
