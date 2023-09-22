@@ -82,7 +82,7 @@ resource "aws_rds_cluster_instance" "read_replica" {
   cluster_identifier              = aws_rds_cluster.rds_cluster[0].cluster_identifier
   engine                          = var.engine
   engine_version                  = var.engine_version
-  instance_class                  = var.data_reader_instance_type
+  instance_class                  = var.instance_class
   publicly_accessible             = var.publicly_accessible
   db_subnet_group_name            = aws_rds_cluster.rds_cluster[0].db_subnet_group_name
   db_parameter_group_name         = var.create_db_parameter_group ? aws_db_parameter_group.parameter_group[0].name : var.db_parameter_group_name
