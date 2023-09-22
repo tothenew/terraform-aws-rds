@@ -56,7 +56,6 @@ resource "aws_rds_cluster" "rds_cluster" {
   enabled_cloudwatch_logs_exports     = var.enabled_cloudwatch_logs_exports
   port                                = var.port
   apply_immediately                   = var.apply_immediately
-  replication_source_identifier       = "${aws_db_instance.rds_cluster_instance_read_replica.arn}"
   tags                                = merge(local.common_tags, tomap({ "Name" : local.project_name_prefix }))
 }
 
