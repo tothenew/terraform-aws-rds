@@ -76,7 +76,7 @@ resource "aws_rds_cluster_instance" "rds_cluster_instance" {
 }
 
 resource "aws_rds_cluster_instance" "read_replica" {
-  count                           = var.create_data_reader && var.create_resources ? 1 : 0
+  count                           = var.create_aurora ? 1 : 0
   identifier                      = "${local.project_name_prefix}-read-replica"
   cluster_identifier              = aws_rds_cluster.rds_cluster[0].cluster_identifier
   engine                          = var.engine
