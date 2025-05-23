@@ -7,7 +7,7 @@ resource "random_string" "unique_string" {
 resource "random_string" "rds_db_password" {
   count   = var.create_username_password ? 1 : 0
   length  = 16
-  special = true
+  special = false
 }
 
 resource "aws_db_subnet_group" "subnet_group" {
