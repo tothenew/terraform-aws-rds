@@ -56,6 +56,9 @@ resource "aws_rds_cluster" "rds_cluster" {
   enabled_cloudwatch_logs_exports     = var.enabled_cloudwatch_logs_exports
   port                                = var.port
   apply_immediately                   = var.apply_immediately
+  performance_insights_enabled             = var.performance_insights_enabled
+  performance_insights_retention_period    = var.performance_insights_enabled ? var.performance_insights_retention_period : null
+  performance_insights_kms_key_id          = var.performance_insights_enabled && var.performance_insights_kms_key_id != "" ? var.performance_insights_kms_key_id : null
   tags                                = merge(local.common_tags, tomap({ "Name" : local.project_name_prefix }))
 }
 
