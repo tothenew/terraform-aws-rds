@@ -56,6 +56,9 @@ resource "aws_rds_cluster" "rds_cluster" {
   enabled_cloudwatch_logs_exports     = var.enabled_cloudwatch_logs_exports
   port                                = var.port
   apply_immediately                   = var.apply_immediately
+  performance_insights_enabled             = var.performance_insights_enabled
+  performance_insights_retention_period    = var.performance_insights_enabled ? var.performance_insights_retention_period : null
+  performance_insights_kms_key_id          = var.performance_insights_enabled && var.performance_insights_kms_key_id != "" ? var.performance_insights_kms_key_id : null
   tags                                = merge(local.common_tags, tomap({ "Name" : local.project_name_prefix }))
 }
 
@@ -72,7 +75,10 @@ resource "aws_rds_cluster_instance" "rds_cluster_instance" {
   apply_immediately            = var.apply_immediately
   auto_minor_version_upgrade   = var.auto_minor_version_upgrade
   publicly_accessible          = var.publicly_accessible
-  tags                         = merge(local.common_tags, tomap({ "Name" : local.project_name_prefix }))
+  performance_insights_enabled             = var.performance_insights_enabled
+  performance_insights_retention_period    = var.performance_insights_enabled ? var.performance_insights_retention_period : null
+  performance_insights_kms_key_id          = var.performance_insights_enabled && var.performance_insights_kms_key_id != "" ? var.performance_insights_kms_key_id : null
+  tags                                     = merge(local.common_tags, tomap({ "Name" : local.project_name_prefix }))
 }
 
 resource "aws_rds_cluster_instance" "read_replica" {
@@ -88,9 +94,11 @@ resource "aws_rds_cluster_instance" "read_replica" {
   preferred_maintenance_window    = var.maintenance_window
   apply_immediately               = var.apply_immediately
   auto_minor_version_upgrade      = var.auto_minor_version_upgrade
-  tags                            = merge(local.common_tags, tomap({ "Name" : "${local.project_name_prefix}-read-replica" }))
+  performance_insights_enabled             = var.performance_insights_enabled
+  performance_insights_retention_period    = var.performance_insights_enabled ? var.performance_insights_retention_period : null
+  performance_insights_kms_key_id          = var.performance_insights_enabled && var.performance_insights_kms_key_id != "" ? var.performance_insights_kms_key_id : null
+  tags                                     = merge(local.common_tags, tomap({ "Name" : "${local.project_name_prefix}-read-replica" }))
 }
-
 
 resource "aws_db_instance" "rds_instance" {
   count                      = var.create_aurora ? 0 : 1
@@ -118,6 +126,9 @@ resource "aws_db_instance" "rds_instance" {
   auto_minor_version_upgrade = var.auto_minor_version_upgrade
   parameter_group_name       = var.create_db_parameter_group ? aws_db_parameter_group.parameter_group[0].name : var.db_parameter_group_name
   multi_az                   = var.multi_az
+  performance_insights_enabled             = var.performance_insights_enabled
+  performance_insights_retention_period    = var.performance_insights_enabled ? var.performance_insights_retention_period : null
+  performance_insights_kms_key_id          = var.performance_insights_enabled && var.performance_insights_kms_key_id != "" ? var.performance_insights_kms_key_id : null
 }
 
 resource "aws_db_instance" "read_replica" {
@@ -141,10 +152,11 @@ resource "aws_db_instance" "read_replica" {
   skip_final_snapshot        = var.skip_final_snapshot
   auto_minor_version_upgrade = var.auto_minor_version_upgrade
   parameter_group_name       = var.create_db_parameter_group ? aws_db_parameter_group.parameter_group[0].name : var.db_parameter_group_name
-
   multi_az                   = var.multi_az
   replicate_source_db        = aws_db_instance.rds_instance[0].arn
-
+  performance_insights_enabled             = var.performance_insights_enabled
+  performance_insights_retention_period    = var.performance_insights_enabled ? var.performance_insights_retention_period : null
+  performance_insights_kms_key_id          = var.performance_insights_enabled && var.performance_insights_kms_key_id != "" ? var.performance_insights_kms_key_id : null
   tags = {
     Name = "${local.project_name_prefix}-read-replica"
   }

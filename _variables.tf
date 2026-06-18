@@ -296,3 +296,21 @@ variable "mysql_users" {
   description = "Create MySql User in database"
   default     = []
 }
+
+variable "performance_insights_enabled" {
+  type        = bool
+  description = "Enable RDS Performance Insights"
+  default     = false
+}
+
+variable "performance_insights_retention_period" {
+  type        = number
+  description = "Performance Insights retention in days."
+  default     = 7
+}
+
+variable "performance_insights_kms_key_id" {
+  type        = string
+  description = "Optional KMS key ARN or ID for Performance Insights."
+  default     = ""
+}
